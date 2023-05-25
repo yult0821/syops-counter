@@ -38,6 +38,25 @@ Requirements: Pytorch >= 1.1, torchvision >= 0.3, spikingjelly<=0.0.0.0.12
 for research purposes. For an instance, one can drop all batch normalization from the counting process
 specifying `ignore_modules=[torch.nn.BatchNorm2d]`.
 
+### Usage for calculating energy consumption of Spikingformer (added by yult)
+1. Initialize and load pretrained weights for the model
+2. Construct the `DataLoader`
+3. Execute the following commands
+   
+    ```python
+    print(args)
+    ts1 = time.time()
+    from syops import get_model_complexity_info
+    # using real data
+    Nops, Nparams = get_model_complexity_info(model, (3, 224, 224), loader_eval, as_strings=True, print_per_layer_stat=True, verbose=True, syops_units='Mac', param_units=' ', output_precision=3)
+    # using random input
+    # Nops, Nparams = get_model_complexity_info(model, (3, 224, 224), dataloader=None, as_strings=True, print_per_layer_stat=True, verbose=True, syops_units='Mac', param_units=' ', output_precision=3)
+    print("Nops: ", Nops)
+    print("Nparams: ", Nparams)
+    t_cost = (time.time() - ts1) / 60
+    print(f"Time cost: {t_cost} min")
+    ```
+
 ## Install the latest version
 From PyPI:
 ```bash

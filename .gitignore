@@ -5,6 +5,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# customed
+*.zip
+*_yu.py
+
 # C extensions
 *.so
 
@@ -54,7 +58,7 @@ coverage.xml
 *.pot
 
 # Django stuff:
-*.log
+# *.log
 local_settings.py
 db.sqlite3
 
