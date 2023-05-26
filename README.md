@@ -42,6 +42,7 @@ specifying `ignore_modules=[torch.nn.BatchNorm2d]`.
 1. Initialize and load pretrained weights for the model
 2. Construct the `DataLoader`
 3. Execute the following commands (need to modify ssa_info in flops_counter.py for different network structures)
+4. See `test_spikingformer-8-512_eg.log` for exemplar results
    
     ```python
     print(args)
@@ -59,7 +60,7 @@ specifying `ignore_modules=[torch.nn.BatchNorm2d]`.
     # need to modify ssa_info in flops_counter.py (Line 16) for different network structures
     # ssa_info = {'depth': 8, 'Nheads': 8, 'embSize': 384, 'patchSize': 14, 'Tsteps': 4}  # lifconvbn-8-384
     # ssa_info = {'depth': 8, 'Nheads': 8, 'embSize': 512, 'patchSize': 14, 'Tsteps': 4}  # lifconvbn-8-512
-    ssa_info = {'depth': 8, 'Nheads': 12, 'embSize': 768, 'patchSize': 14, 'Tsteps': 4}  # lifconvbn-8-768
+    # ssa_info = {'depth': 8, 'Nheads': 12, 'embSize': 768, 'patchSize': 14, 'Tsteps': 4}  # lifconvbn-8-768
 
     # just run one batch when debugging (Line 79 in engine.py)
     # if batch_idx >= 1: break
