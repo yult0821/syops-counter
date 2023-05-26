@@ -41,7 +41,7 @@ specifying `ignore_modules=[torch.nn.BatchNorm2d]`.
 ### Usage for calculating energy consumption of Spikingformer (added by yult)
 1. Initialize and load pretrained weights for the model
 2. Construct the `DataLoader`
-3. Execute the following commands
+3. Execute the following commands (need to modify ssa_info in flops_counter.py for different network structures)
    
     ```python
     print(args)
@@ -55,17 +55,25 @@ specifying `ignore_modules=[torch.nn.BatchNorm2d]`.
     print("Nparams: ", Nparams)
     t_cost = (time.time() - ts1) / 60
     print(f"Time cost: {t_cost} min")
+
+    # need to modify ssa_info in flops_counter.py (Line 16) for different network structures
+    # ssa_info = {'depth': 8, 'Nheads': 8, 'embSize': 384, 'patchSize': 14, 'Tsteps': 4}  # lifconvbn-8-384
+    # ssa_info = {'depth': 8, 'Nheads': 8, 'embSize': 512, 'patchSize': 14, 'Tsteps': 4}  # lifconvbn-8-512
+    ssa_info = {'depth': 8, 'Nheads': 12, 'embSize': 768, 'patchSize': 14, 'Tsteps': 4}  # lifconvbn-8-768
+
+    # just run one batch when debugging (Line 79 in engine.py)
+    # if batch_idx >= 1: break
     ```
 
 ## Install the latest version
-From PyPI:
-```bash
-pip install syops
-```
-
 From this repository:
 ```bash
-pip install --upgrade git+https://github.com/iCGY96/syops-counter
+pip install --upgrade git+https://github.com/yult0821/syops-counter
+```
+
+From PyPI (**not suitable for this fork**):
+```bash
+pip install syops
 ```
 
 ## Example

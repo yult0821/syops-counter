@@ -79,7 +79,7 @@ def get_syops_pytorch(model, input_res, dataloader=None,
             # if batch_idx >= 1: break
 
         bar.finish()
-        syops_count, params_count = syops_model.compute_average_syops_cost()  # 整个网络Spikformer的操作数加和除以累积的batchsize、总的参数和。未对网络中子模块操作。
+        syops_count, params_count = syops_model.compute_average_syops_cost()  # 整个网络的操作数加和除以累积的batchsize、总的参数和。未对网络中子模块操作。
         # syops_count += syops_item / len(dataloader)
     else:
         if input_constructor:
@@ -239,14 +239,14 @@ def compute_average_syops_cost(self):
     for m in self.modules():  # 递归式的为每个子模块加上属性accumulate_syops
         m.accumulate_syops = accumulate_syops.__get__(m)
 
-    syops_sum = self.accumulate_syops()  # 整个网络Spikformer的操作数加和。未对网络中子模块操作。self.accumulate_syops()只返回self的__syops__
+    syops_sum = self.accumulate_syops()  # 整个网络的操作数加和。未对网络中子模块操作。self.accumulate_syops()只返回self的__syops__
     syops_sum = np.array([item / self.__batch_counter__ for item in syops_sum])
 
     for m in self.modules():
         if hasattr(m, 'accumulate_syops'):
             del m.accumulate_syops
 
-    params_sum = get_model_parameters_number(self)  # 整个网络Spikformer的参数加和
+    params_sum = get_model_parameters_number(self)  # 整个网络的参数加和
     return syops_sum, params_sum
 
 
